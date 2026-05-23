@@ -11,8 +11,12 @@ if __name__ == "__main__":
     print("Web scrape is in progress...")
     results = manager.run_all()
 
-    if not results:
-        print("Product not found on any site.")
-    else:
-        for res in results:
+    for res in results:
+        if res.price == 0 and res.title == "EMPTY":
+            print(f"{res.site}: Not found or no exact match.")
+        elif res.price == 0 and res.title == "BANNED":
+            print(f"{res.site}: Access denied (Bot blocked).")
+        elif res.price == 0 and res.title == "TIMEOUT":
+            print(f"{res.site}: Connection timeout.")
+        else:
             print(f"{res.site}: {res.price} - {res.title}")
