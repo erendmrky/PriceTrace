@@ -3,8 +3,15 @@ from ScraperManager import ScraperManager
 if __name__ == "__main__":
     print("Welcome to PriceTrace!")
 
-    category_select = input("Select the pc category for better results(cpu,gpu,ram,motherboard,ssd,psu):")
-    users_input = input("Enter the pc part you want to see price differences in the sites:")
+    valid_categories = ["cpu", "gpu", "ram", "motherboard", "ssd", "psu"]
+
+    while True:
+        category_select = input("Select the pc category for better results(cpu,gpu,ram,motherboard,ssd,psu): ").strip().lower()
+        if category_select in valid_categories:
+            break
+        print("Invalid input! Please enter exactly one of the valid categories.\n")
+
+    users_input = input("Enter the pc part you want to see price differences in the sites: ").strip()
 
     manager = ScraperManager(category_select, users_input)
 
@@ -19,4 +26,4 @@ if __name__ == "__main__":
         elif res.price == 0 and res.title == "TIMEOUT":
             print(f"{res.site}: Connection timeout.")
         else:
-            print(f"{res.site}: {res.price} - {res.title}")
+            print(f"{res.site}: {res.price}₺ - {res.title}")
