@@ -1,6 +1,7 @@
 from ItopyaScraper import ItopyaScraper
 from MediaMarktScraper import MediaMarktScraper
 from IncehesapScraper import IncehesapScraper
+from SinerjiScraper import SinerjiScraper
 
 
 class ScraperManager:
@@ -11,7 +12,8 @@ class ScraperManager:
         self.scraper_classes = [
             ItopyaScraper,
             MediaMarktScraper,
-            IncehesapScraper
+            IncehesapScraper,
+            SinerjiScraper
         ]
 
     def run_all(self):
