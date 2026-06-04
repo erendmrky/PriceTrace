@@ -1,6 +1,8 @@
 from ItopyaScraper import ItopyaScraper
 from MediaMarktScraper import MediaMarktScraper
 from IncehesapScraper import IncehesapScraper
+from GaminggenScraper import GaminggenScraper
+from TeknobiyotikScraper import TeknobiyotikScraper
 from SinerjiScraper import SinerjiScraper
 from TebilonScraper import TebilonScraper
 from VatanbilgisayarScraper import VatanbilgisayarScraper
@@ -17,7 +19,9 @@ class ScraperManager:
             IncehesapScraper,
             SinerjiScraper,
             VatanbilgisayarScraper,
-            TebilonScraper
+            TebilonScraper,
+            GaminggenScraper,
+            TeknobiyotikScraper
         ]
 
     def run_all(self):
