@@ -5,7 +5,7 @@ from typing_extensions import override
 from BaseScraper import BaseScraper
 from ProductResult import ProductResult
 from requests.exceptions import RequestException
-from curl_cffi import requests
+import requests
 
 
 class TeknobiyotikScraper(BaseScraper):
