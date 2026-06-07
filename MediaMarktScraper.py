@@ -68,7 +68,7 @@ class MediaMarktScraper(BaseScraper):
                         continue
                     raw_price = priceTag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
-                    return ProductResult("MediaMarkt",title,parsed_price)
+                    return ProductResult("MediaMarkt",title,parsed_price,new_url)
 
         return ProductResult("MediMarkt","EMPTY",0)
 

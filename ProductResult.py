@@ -4,4 +4,5 @@ from dataclasses import dataclass
 class ProductResult:
     site: str
     title: str
-    price: float
+    price: float= 0
+    link: str = "NONE"

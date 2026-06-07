@@ -50,12 +50,14 @@ class IncehesapScraper(BaseScraper):
             if all(re.search(rf"\b{re.escape(term)}\b", title.lower()) for term in search_terms):
 
                 price_tag = item.find("span", {"itemprop": "price"})
+                rel_url = item.get("href")
+                link = "https://www.incehesap.com/"+str(rel_url)
 
                 if price_tag is not None:
                     raw_price = price_tag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
 
-                    return ProductResult("İncehesap", title, parsed_price)
+                    return ProductResult("İncehesap", title, parsed_price,link)
 
         return ProductResult("İncehesap", "EMPTY", 0)
 

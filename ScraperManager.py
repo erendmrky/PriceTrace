@@ -8,6 +8,8 @@ from TebilonScraper import TebilonScraper
 from VatanbilgisayarScraper import VatanbilgisayarScraper
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from VizyonBilgisayar import VizyonBilgisayarScraper
+
 
 class ScraperManager:
     def __init__(self, category_select, user_input):
@@ -22,7 +24,8 @@ class ScraperManager:
             VatanbilgisayarScraper,
             TebilonScraper,
             GaminggenScraper,
-            TeknobiyotikScraper
+            TeknobiyotikScraper,
+            VizyonBilgisayarScraper
         ]
 
     def run_all(self):
