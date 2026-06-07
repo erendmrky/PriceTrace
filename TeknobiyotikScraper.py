@@ -48,6 +48,7 @@ class TeknobiyotikScraper(BaseScraper):
 
             if all(re.search(rf"\b{re.escape(term)}\b", title.lower()) for term in search_terms):
 
+                link = str(a_tag.get("href"))
                 price_box = h3_tag.find_next("div", class_="price-box")
 
                 if price_box:
@@ -57,7 +58,7 @@ class TeknobiyotikScraper(BaseScraper):
                         raw_price = price_tag.getText(strip=True)
                         parsed_price = self._parse_price(raw_price)
 
-                        return ProductResult("Teknobiyotik", title, parsed_price)
+                        return ProductResult("Teknobiyotik", title, parsed_price,link)
 
         return ProductResult("Teknobiyotik", "EMPTY", 0)
 

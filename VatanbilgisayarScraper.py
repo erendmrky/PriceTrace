@@ -45,11 +45,12 @@ class VatanbilgisayarScraper(BaseScraper):
             title = title_tag.getText(strip=True)
 
             if all(re.search(rf"\b{re.escape(term)}\b", title.lower()) for term in search_terms):
+                link = str(items.get("href"))
                 price_tag = items.find("span",class_="product-list__price")
                 if price_tag is not None:
                     raw_price = price_tag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
-                    return ProductResult("Vatanbilgisayar",title,parsed_price)
+                    return ProductResult("Vatanbilgisayar",title,parsed_price,link)
 
         return ProductResult("Vatanbilgisayar", "EMPTY", 0)
 

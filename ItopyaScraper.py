@@ -45,11 +45,13 @@ class ItopyaScraper(BaseScraper):
             title = title_tag.getText(strip=True)
 
             if all(re.search(rf"\b{re.escape(term)}\b", title.lower()) for term in search_terms):
+                link = title_tag.get("href")
+                item_link = "https://www.itopya.com/"+link
                 price_tag = items.find("strong")
                 if price_tag is not None:
                     raw_price = price_tag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
-                    return ProductResult("İtopya",title,parsed_price)
+                    return ProductResult("İtopya",title,parsed_price,item_link)
 
         return ProductResult("İtopya", "EMPTY", 0)
 

@@ -8,9 +8,26 @@ class BaseScraper(ABC):
     def _parse_price(self, price_str):
         if not price_str:
             return 0.0
-        clean_str = price_str.replace("TL", "").replace(".", "").replace(",", ".").replace("₺","").strip()
+
+        clean_str = (
+            price_str
+            .replace("TL", "")
+            .replace("₺", "")
+            .replace(".", "")
+            .replace(",", ".")
+            .strip()
+        )
         try:
-            return float(clean_str)
+            price = float(clean_str)
+
+            whole_part = int(price)
+            decimal_part = round(price - whole_part, 2)
+
+            if whole_part % 1000 == 999 and decimal_part == 0:
+                price = float(whole_part + 1)
+
+            return price
+
         except ValueError:
             return 0.0
 
