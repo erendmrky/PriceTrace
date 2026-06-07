@@ -1,0 +1,5 @@
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+typing_extensions>=4.7.0
+curl_cffi>=0.5.10
+camoufox[geoip]>=0.4.0

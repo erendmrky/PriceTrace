@@ -6,6 +6,7 @@ from TeknobiyotikScraper import TeknobiyotikScraper
 from SinerjiScraper import SinerjiScraper
 from TebilonScraper import TebilonScraper
 from VatanbilgisayarScraper import VatanbilgisayarScraper
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 class ScraperManager:
@@ -25,13 +26,21 @@ class ScraperManager:
         ]
 
     def run_all(self):
-        result = []
+        results = []
 
-        for scraper_class in self.scraper_classes:
-            scraper = scraper_class(self.category_select, self.user_input)
-            scrape_result = scraper.scrape()
+        with ThreadPoolExecutor(max_workers=len(self.scraper_classes)) as executor:
+            futures = {
+                executor.submit(
+                    cls(self.category_select, self.user_input).scrape
+                ): cls for cls in self.scraper_classes
+            }
 
-            if scrape_result is not None:
-                result.append(scrape_result)
+            for future in as_completed(futures):
+                try:
+                    scrape_result = future.result()
+                    if scrape_result:
+                        results.append(scrape_result)
+                except Exception:
+                    pass
 
-        return result
+        return results
