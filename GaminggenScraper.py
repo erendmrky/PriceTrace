@@ -26,6 +26,7 @@ class GaminggenScraper(BaseScraper):
     def scrape(self):
         search_url = self.build_search_url()
         page_source = ""
+        current_url = ""
 
         try:
             with Camoufox(headless=True, humanize=True, window=(1280, 720)) as browser:
@@ -43,6 +44,7 @@ class GaminggenScraper(BaseScraper):
                     return ProductResult("Gaming.Gen.TR", "BANNED", 0)
 
                 page_source = page.content()
+                current_url = page.url
 
         except Exception:
             return ProductResult("Gaming.Gen.TR", "TIMEOUT", 0)
@@ -67,7 +69,7 @@ class GaminggenScraper(BaseScraper):
                 if price_tag:
                     raw_price = price_tag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
-                    return ProductResult("Gaming.Gen.TR", title, parsed_price)
+                    return ProductResult("Gaming.Gen.TR", title, parsed_price, current_url)
 
         # ====================================================================
         # DURUM 2: Standart arama listesi sayfası (<h2>)
@@ -90,8 +92,18 @@ class GaminggenScraper(BaseScraper):
                 if price_tag is not None:
                     raw_price = price_tag.getText(strip=True)
                     parsed_price = self._parse_price(raw_price)
+                    a_tag = title_tag.find_parent("a") or title_tag.find("a")
+                    if not a_tag and title_tag.parent:
+                        a_tag = title_tag.parent.find("a")
 
-                    return ProductResult("Gaming.Gen.TR", title, parsed_price)
+                    rel_url = a_tag.get("href") if a_tag else ""
+
+                    if rel_url and not rel_url.startswith("http"):
+                        item_link = "https://www.gaming.gen.tr" + str(rel_url)
+                    else:
+                        item_link = str(rel_url)
+
+                    return ProductResult("Gaming.Gen.TR", title, parsed_price, item_link)
 
         return ProductResult("Gaming.Gen.TR", "EMPTY", 0)
 
